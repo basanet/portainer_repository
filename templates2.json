@@ -2,50 +2,27 @@
   "version": "2",
   "templates": [
     {
-      "type": 2,
-      "title": "LiveSwitch",
-      "description": "A basic LiveSwitch stack with gateway, caching, database and media server",
-      "categories": ["media"],
+      "type": 1,
+      "title": "Registry",
+      "description": "Docker image registry",
+      "categories": [
+        "docker"
+      ],
       "platform": "linux",
-      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/liveswitch.png",
-      "repository": {
-        "url": "https://github.com/portainer/templates",
-        "stackfile": "stacks/liveswitch/docker-stack.yml"
-      },
-      "env": [
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/registry.png",
+      "image": "registry:latest",
+      "ports": [
+        "5000/tcp"
+      ],
+      "volumes": [
         {
-          "name": "POSTGRES_PASSWORD",
-          "label": "Postgres password"
+          "container": "/var/lib/registry"
         }
       ]
     },
     {
-      "type": 2,
-      "title": "Node-RED",
-      "description": "Neue Node-RED Instanz",
-      "categories": ["media"],
-      "platform": "linux",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Node-red-icon.png/200px-Node-red-icon.png",
-      "repository": 
-      {
-        "url" : "https://github.com/basanet/portainer_repository",
-        "stackfile" : "stacks/node-red.yaml"
-      },
-      "env": 
-      [
-        {
-        "name": "NAME",
-        "label": "Container Name"
-        },
-        {
-        "name": "HOSTNAME",
-        "label": "Hostname"        
-        },
-        {
-        "name": "DOMAIN",
-        "label": "Domain"        
-        }
-      ]
-    }
-  ]
-}
+      "type": 1,
+      "title": "Registry (cache)",
+      "description": "Docker image registry configured as a DockerHub pull through cache",
+      "categories": [
+        "docker"
