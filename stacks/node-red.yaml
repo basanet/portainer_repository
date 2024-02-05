@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  {{ NAME }}:
+    container_name: {{ NAME }}
+    hostname: {{ NAME }}
+    image: nodered/node-red:latest
+    environment:
+      - TZ=Europe/Zurich
+    volumes:
+      - {{ NAME }}_data:/data
+
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ NAME }}.rule=Host(`{{ HOSTNAME }}.{{ DOMAIN }}`)
+      - traefik.http.routers.{{ NAME }}.entrypoints=web-secure
+      - traefik.http.routers.{{ NAME }}.tls.certresolver=le
+      - traefik.http.routers.{{ NAME }}.service={{ NAME }}-service
+      - traefik.http.services.{{ NAME }}-service.loadbalancer.server.port=1880
+    networks:
+      - private
+
+volumes:
+  {{ NAME }}_data:
+    name: {{ NAME }}
+
+networks:
+  private:
+    external: true
