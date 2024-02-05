@@ -3,19 +3,27 @@
   "templates": [
     {
       "type": 2,
-      "title": "LiveSwitch",
-      "description": "A basic LiveSwitch stack with gateway, caching, database and media server",
+      "title": "Node-RED",
+      "description": "Node-RED ist ein von IBM entwickeltes grafisches Entwicklungswerkzeug",
       "categories": ["media"],
       "platform": "linux",
-      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/liveswitch.png",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Node-red-icon.png",
       "repository": {
-        "url": "https://github.com/portainer/templates",
-        "stackfile": "stacks/liveswitch/docker-stack.yml"
+        "url": "https://github.com/basanet/portainer_repository",
+        "stackfile": "stacks/node-red.yml"
       },
       "env": [
         {
-          "name": "POSTGRES_PASSWORD",
-          "label": "Postgres password"
+          "name": "NAME",
+          "label": "Name"
+        },
+        {
+          "name": "HOSTNAME",
+          "label": "Hostname"
+        },
+        {
+          "name": "DOMAIN",
+          "label": "Domain"
         }
       ]
     },
