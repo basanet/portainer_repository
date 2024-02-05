@@ -24,7 +24,7 @@
       "platform": "linux",
       "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/httpd.png",
       "image": "httpd:latest",
-      "ports": ["80/tcp"],
+      "ports": ["8888/tcp"],
       "volumes": [
         {
           "container": "/usr/local/apache2/htdocs/"
