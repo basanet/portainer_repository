@@ -23,7 +23,7 @@
       "type": 2,
       "title": "Node-RED",
       "description": "Neue Node-RED Instanz",
-      "categories": ["automatisierung","api"],
+      "categories": ["media"],
       "platform": "linux",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Node-red-icon.png/200px-Node-red-icon.png",
       "repository": 
