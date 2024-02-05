@@ -2,7 +2,7 @@
   "version": "2",
   "templates": [
     {
-      "type": 2,
+      "type": 3,
       "title": "Node-RED",
       "description": "Node-RED ist ein von IBM entwickeltes grafisches Entwicklungswerkzeug",
       "categories": ["media"],
