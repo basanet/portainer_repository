@@ -31,7 +31,10 @@ services:
       - --certificatesresolvers.le.acme.tlschallenge=true
       - --serverstransport.insecureskipverify=true
     volumes:
-      - container:/data
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - {{ NAME }}_configuration:/configuration
+      - {{ NAME }}_logs:/logs
+    restart: always
 
     restart: always
     labels:
