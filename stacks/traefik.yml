@@ -30,12 +30,11 @@ services:
       - --certificatesresolvers.le.acme.storage=/configuration/acme.json
       - --certificatesresolvers.le.acme.tlschallenge=true
       - --serverstransport.insecureskipverify=true
+    
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - {{ NAME }}_configuration:/configuration
       - {{ NAME }}_logs:/logs
-    restart: always
-
     restart: always
     labels:
       - traefik.enable=true
