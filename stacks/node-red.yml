@@ -7,7 +7,7 @@ services:
     environment:
       - TZ=Europe/Zurich
     volumes:
-      - container:/data
+      - {{ NAME }}:/data
 
     restart: always
     labels:
@@ -21,7 +21,7 @@ services:
       - private
 
 volumes:
-  container:
+  {{ NAME }}:
     name: {{ NAME }}
 
 networks:
