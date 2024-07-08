@@ -1,0 +1,61 @@
+version: "3.9"
+services:
+  {{ NAME }}:
+    container_name: {{ NAME }}
+    network_mode: host
+    hostname: {{ NAME }}
+    image: traefik:latest
+    environment:
+      - TZ=Europe/Zurich
+    command:
+      - --log.level=INFO
+      - --log.filePath=/logs/traefik.log
+      - --entrypoints.web.address=:80
+      - --entrypoints.web-secure.address=:443
+      - --entrypoints.dns-secure.address=:853
+      - --providers.docker=true
+      - --providers.file.directory=/configuration/
+      - --providers.file.watch=true
+      - --providers.docker.network=private
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=private
+      - --providers.docker.exposedbydefault=false
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --accesslog=true
+      - --accesslog.filepath=/logs/access.log
+      - --accesslog.format=json
+      - --serverstransport.insecureskipverify=true
+      - --certificatesresolvers.le.acme.email=it+admin@basanet.net
+      - --certificatesresolvers.le.acme.storage=/configuration/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --serverstransport.insecureskipverify=true
+    volumes:
+      - container:/data
+
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{ NAME }}.rule=Host(`{{ HOSTNAME }}.{{ DOMAIN }}`)
+      - traefik.http.routers.{{ NAME }}.entrypoints=web-secure
+      - traefik.http.routers.{{ NAME }}.service=api@internal
+      - traefik.http.routers.{{ NAME }}.tls.certresolver=le
+      - traefik.http.routers.{{ NAME }}.service={{ NAME }}-service
+      - traefik.http.services.{{ NAME }}-service.loadbalancer.server.port=8080
+      - traefik.http.routers.{{ NAME }}.tls.certresolver=le
+      - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
+      - traefik.http.routers.http-catchall.entrypoints=web
+      - traefik.http.routers.http-catchall.middlewares=redirect-to-https
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https      
+    networks:
+      - private
+
+volumes:
+  {{ NAME }}_configuration:
+    name: {{ NAME }}_configuration
+  traefik_logs:
+    name: {{ NAME }}_logs
+
+networks:
+  private:
+    external: true
