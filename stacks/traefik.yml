@@ -1,9 +1,9 @@
 version: "3.9"
 services:
-  {{ NAME }}:
-    container_name: {{ NAME }}
+  traefik:
+    container_name: traefik
     network_mode: host
-    hostname: {{ NAME }}
+    hostname: traefik
     image: traefik:latest
     environment:
       - TZ=Europe/Zurich
@@ -33,18 +33,18 @@ services:
     
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - {{ NAME }}_configuration:/configuration
-      - {{ NAME }}_logs:/logs
+      - traefik_configuration:/configuration
+      - traefik_logs:/logs
     restart: always
     labels:
       - traefik.enable=true
-      - traefik.http.routers.{{ NAME }}.rule=Host(`{{ HOSTNAME }}.{{ DOMAIN }}`)
-      - traefik.http.routers.{{ NAME }}.entrypoints=web-secure
-      - traefik.http.routers.{{ NAME }}.service=api@internal
-      - traefik.http.routers.{{ NAME }}.tls.certresolver=le
-      - traefik.http.routers.{{ NAME }}.service={{ NAME }}-service
-      - traefik.http.services.{{ NAME }}-service.loadbalancer.server.port=8080
-      - traefik.http.routers.{{ NAME }}.tls.certresolver=le
+      - traefik.http.routers.traefik.rule=Host(`proxy.hetzner.basanet.net`)
+      - traefik.http.routers.traefik.entrypoints=web-secure
+      - traefik.http.routers.traefik.service=api@internal
+      - traefik.http.routers.traefik.tls.certresolver=le
+      - traefik.http.routers.traefik.service=traefik-service
+      - traefik.http.services.traefik-service.loadbalancer.server.port=8080
+      - traefik.http.routers.traefik.tls.certresolver=le
       - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
       - traefik.http.routers.http-catchall.entrypoints=web
       - traefik.http.routers.http-catchall.middlewares=redirect-to-https
@@ -53,10 +53,10 @@ services:
       - private
 
 volumes:
-  {{ NAME }}_configuration:
-    name: {{ NAME }}_configuration
+  traefik_configuration:
+    name: traefik_configuration
   traefik_logs:
-    name: {{ NAME }}_logs
+    name: traefik_logs
 
 networks:
   private:
