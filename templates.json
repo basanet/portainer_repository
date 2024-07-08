@@ -26,6 +26,32 @@
           "label": "Domain"
         }
       ]
+    },
+    {
+      "type": 3,
+      "title": "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
+      "description": "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
+      "categories": ["media"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/docker-library/docs/a6cc2c5f4bc6658168f2a0abbb0307acaefff80e/traefik/logo.png",
+      "repository": {
+        "url": "https://github.com/basanet/portainer_repository",
+        "stackfile": "stacks/traefik.yml"
+      },
+      "env": [
+        {
+          "name": "NAME",
+          "label": "Name"
+        },
+        {
+          "name": "HOSTNAME",
+          "label": "Hostname"
+        },
+        {
+          "name": "DOMAIN",
+          "label": "Domain"
+        }
+      ]
     }
   ]
 }
